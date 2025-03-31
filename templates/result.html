@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Result - Fake News Detection</title>
+  <!-- Tailwind CSS via CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
+  <!-- Aesthetic Font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f2f2f2;
+      background-image: url('https://picsum.photos/1600/900');
+      background-size: cover;
+      min-height: 100vh;
+      color: #333;
+    }
+    /* Navigation Bar */
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar-brand {
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: #333;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-link {
+      text-decoration: none;
+      color: #555;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .nav-link:hover {
+      color: #FF6B6B;
+      transform: scale(1.1);
+    }
+    /* Main Content Container */
+    .content-container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+    /* Heading and Text */
+    h2 {
+      color: #ff6f61;
+      margin-bottom: 1rem;
+    }
+    .result-text {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .statement {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .statement p {
+      margin: 0;
+    }
+    .statement img {
+      max-width: 100%;
+      max-height: 300px;
+      margin-top: 10px;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+    /* Buttons */
+    .btn {
+      padding: 10px 20px;
+      background-color: #FF6B6B;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin: 10px 5px;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #FF4757;
+    }
+    /* Footer */
+    footer {
+      background-color: #fff;
+      padding: 1rem 0;
+      border-top: 1px solid #ddd;
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar py-4">
+    <div class="navbar-container">
+      <a href="/" class="navbar-brand">Fake News Detection</a>
+      <div class="nav-links hidden md:flex">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/about" class="nav-link">About</a>
+        <a href="/services" class="nav-link">Services</a>
+        <a href="/contact" class="nav-link">Contact</a>
+      </div>
+      <!-- Mobile Hamburger (if needed) -->
+      <div class="md:hidden">
+        <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="focus:outline-none">
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Links -->
+    <div id="mobile-menu" class="md:hidden hidden px-4 pt-2 pb-4">
+      <a href="/" class="block py-2 nav-link">Home</a>
+      <a href="/about" class="block py-2 nav-link">About</a>
+      <a href="/services" class="block py-2 nav-link">Services</a>
+      <a href="https://forms.gle/26cFaU7qwzEF96Gq7" class="block py-2 nav-link">Contact</a>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-10">
+    <div class="max-w-3xl mx-auto content-container p-8">
+      <h2 class="text-center text-2xl md:text-3xl font-semibold">Result</h2>
+      <div class="result-text text-center">
+        <p>The statement is: <strong>{{ result }}</strong></p>
+      </div>
+      <div class="statement">
+        <p>{{ statement }}</p>
+      </div>
+      <!-- Image Section with class "mx-auto block" to center the image -->
+      <div class="statement">
+        <img id="news-img" class="mx-auto block" src="{{ image }}" alt="Your Statement">
+      </div>
+      <div class="text-center">
+        <a href="/data_analysis" class="btn">Data Analysis</a>
+        <button class="btn" onclick="window.history.back()">Go Back</button>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="container mx-auto text-center">
+      <p class="text-sm text-gray-600">&copy; 2024 Fake News Detection. All rights reserved.</p>
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="btn">Scroll to Top</button>
+    </div>
+  </footer>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var imgElement = document.getElementById('news-img');
+      // Check if the provided image source is empty or whitespace only
+      if (!imgElement.getAttribute('src') || imgElement.getAttribute('src').trim() === "") {
+        // Use the statement text for the query (provided by your template engine)
+        var statementText = "{{ statement }}";
+        console.log("No image provided. Fetching web-crawled image for:", statementText);
+        // Request an image from your web-crawling API endpoint
+        fetch(`/api/crawl-image?query=${encodeURIComponent(statementText)}`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log("API response:", data);
+            if (data.imageUrl) {
+              imgElement.src = data.imageUrl;
+            } else {
+              console.warn("No imageUrl in API response. Using fallback image.");
+              imgElement.src = "https://source.unsplash.com/featured/?news";
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching image:", error);
+            imgElement.src = "https://source.unsplash.com/featured/?news";
+          });
+      }
+    });
+  </script>
+</body>
+</html>

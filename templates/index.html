@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fake News Detection</title>
+  <!-- Tailwind CSS via CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
+  <!-- Aesthetic Font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f2f2f2;
+      background-image: url('https://picsum.photos/1600/900');
+      min-height: 100vh;
+      color: #333;
+    }
+    /* Navigation Bar */
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar-brand {
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: #333;
+    }
+    .nav-link {
+      transition: color 0.3s ease, transform 0.3s ease;
+      color: #555;
+    }
+    .nav-link:hover {
+      color: #FF6B6B;
+      transform: scale(1.1);
+    }
+    /* Mobile Menu Transition */
+    #mobile-menu {
+      transition: max-height 0.3s ease;
+    }
+    /* Main Content Container */
+    .content-container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+    /* Form Input */
+    .aesthetic-input {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      width: 100%;
+      transition: border-color 0.3s ease;
+    }
+    .aesthetic-input:focus {
+      outline: none;
+      border-color: #FF6B6B;
+      box-shadow: 0 0 8px rgba(255,107,107,0.3);
+    }
+    /* Detect Button */
+    .btn-detect {
+      background-color: #FF6B6B;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    .btn-detect:hover {
+      transform: scale(1.05);
+      background-color: #FF4757;
+    }
+    /* Scroll-to-top Button */
+    .scroll-top-btn {
+      background-color: #FF6B6B;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      transition: background-color 0.3s;
+    }
+    .scroll-top-btn:hover {
+      background-color: #FF4757;
+    }
+  </style>
+  <script>
+    // Toggle mobile menu display on mobile devices
+    function toggleMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+  </script>
+</head>
+<body>
+  <!-- Navigation Bar with Branding -->
+  <nav class="navbar py-4">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <!-- Brand: Fake News Detection -->
+      <a href="#" class="navbar-brand">Fake News Detection</a>
+      <!-- Desktop Navigation Links -->
+      <div class="hidden md:flex space-x-6">
+        <a href="#" class="nav-link text-base">Home</a>
+        <a href="#" class="nav-link text-base">About</a>
+        <a href="#" class="nav-link text-base">Services</a>
+        <a href="https://forms.gle/26cFaU7qwzEF96Gq7" class="nav-link text-base">Contact</a>
+      </div>
+      <!-- Mobile Hamburger Icon -->
+      <div class="md:hidden">
+        <button onclick="toggleMenu()" class="focus:outline-none">
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" 
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Links -->
+    <div id="mobile-menu" class="md:hidden hidden px-4 pt-2 pb-4">
+      <a href="#" class="block py-2 nav-link">Home</a>
+      <a href="#" class="block py-2 nav-link">About</a>
+      <a href="#" class="block py-2 nav-link">Services</a>
+      <a href="#" class="block py-2 nav-link">Contact</a>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-10">
+    <div class="max-w-3xl mx-auto content-container p-8">
+      <h2 class="text-center text-2xl md:text-3xl font-semibold mb-6">Let's Check Your Article :</h2>
+      <form action="/predict" method="POST" class="flex flex-col items-center">
+        <div class="w-full mb-4">
+          <input 
+            type="text" 
+            name="statement" 
+            placeholder="Enter your statement" 
+            class="aesthetic-input"
+          >
+        </div>
+        <button type="submit" class="btn-detect">Detect</button>
+      </form>
+      <div class="mt-6 text-center">
+        <p class="mb-4 text-base leading-relaxed">
+          Our platform leverages state-of-the-art algorithms to analyze and verify the authenticity of news articles.  
+          Experience a seamless and efficient way to distinguish real news from misinformation.
+        </p>
+        <p class="text-base leading-relaxed">
+          Immerse yourself in an environment where clarity meets modern design—providing you with reliable insights at your fingertips.
+        </p>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer with Scroll-to-Top Button -->
+  <footer class="bg-white py-4 border-t border-gray-200">
+    <div class="container mx-auto text-center">
+      <p class="text-sm text-gray-600">&copy; 2024 Fake News Detection. All rights reserved.</p>
+      <button 
+        onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+        class="scroll-top-btn mt-4"
+      >
+        Scroll to Top
+      </button>
+    </div>
+  </footer>
+</body>
+</html>
